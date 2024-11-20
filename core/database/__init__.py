@@ -5,6 +5,6 @@ __all__ = (
     "Users",
 )
 
-from base import Base
-from db_helper import DatabaseHelper, db_helper
-from users import Users
+from .base import Base
+from .db_helper import DatabaseHelper, db_helper
+from .users import Users
