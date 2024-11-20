@@ -4,9 +4,13 @@ from verselect import HeaderRoutingFastAPI
 
 from fastapi.middleware.cors import CORSMiddleware
 
+from core.database import Base, db_helper
+
 
 @asynccontextmanager
 async def lifespan():
+    async with db_helper.engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
     yield
 
 
