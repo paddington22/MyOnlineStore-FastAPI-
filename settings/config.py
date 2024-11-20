@@ -9,6 +9,8 @@ class Settings(BaseSettings):
         env_file=BASE_DIR / ".env", env_file_encoding="utf-8"
     )
 
+    db_echo: bool = False
+
     POSTGRES_HOST: str
     POSTGRES_PORT: int = 5432
     POSTGRES_USER: str
