@@ -12,6 +12,7 @@ async def lifespan():
 
 app = HeaderRoutingFastAPI(lifespan=lifespan)
 
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
