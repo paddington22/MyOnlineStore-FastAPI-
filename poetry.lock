@@ -664,7 +664,7 @@ files = [
 ]
 
 [package.dependencies]
-greenlet = {version = "!=0.4.17", markers = "python_version < \"3.13\" and (platform_machine == \"aarch64\" or platform_machine == \"ppc64le\" or platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"win32\" or platform_machine == \"WIN32\")"}
+greenlet = {version = "!=0.4.17", optional = true, markers = "python_version < \"3.13\" and (platform_machine == \"aarch64\" or platform_machine == \"ppc64le\" or platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"win32\" or platform_machine == \"WIN32\") or extra == \"asyncio\""}
 typing-extensions = ">=4.6.0"
 
 [package.extras]
@@ -757,4 +757,4 @@ jinja2 = ">=3.1.2"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "4d609330bf8dc99f56d6ab234b23e8ab86aa37aea4ede695e2eed5a55d8e360c"
+content-hash = "f09d711a453fe31424b0bb9a8de493182ed16f84f0d1fac885d515e0ba631ff1"
