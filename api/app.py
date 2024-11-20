@@ -1,9 +1,16 @@
+from contextlib import asynccontextmanager
+
 from verselect import HeaderRoutingFastAPI
 
 from fastapi.middleware.cors import CORSMiddleware
 
 
-app = HeaderRoutingFastAPI()
+@asynccontextmanager
+async def lifespan():
+    yield
+
+
+app = HeaderRoutingFastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
