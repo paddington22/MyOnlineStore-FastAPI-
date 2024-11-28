@@ -1,7 +1,14 @@
+from enum import Enum
+
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .base import Base
+
+
+class UserRole(Enum):
+    admin = "admin"
+    client = "client"
 
 
 class Users(Base):
