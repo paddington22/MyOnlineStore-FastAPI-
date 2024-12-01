@@ -4,7 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 
 from . import crud
-from .schemas import ProductResponse, ProductCreate
+from .dependencies import get_product_by_id
+from .schemas import ProductResponse, ProductCreate, ProductUpdate, ProductUpdatePartial
 from core.database import db_helper, Product
 
 router = APIRouter(prefix="/products", tags=["Products"])
@@ -38,12 +39,41 @@ async def create_product(
 
 @router.get("/{product_id}", response_model=ProductResponse)
 async def get_product(
-    product_id: int,
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    product: Product = Depends(get_product_by_id),
 ):
-    product = await crud.get_product(session=session, product_id=product_id)
-    if product:
-        return product
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND, detail=f"Product {product_id} not found"
+    return product
+
+
+@router.put("/{product_id}", response_model=ProductResponse)
+async def update_product(
+    payload: ProductUpdate,
+    product: Product = Depends(get_product_by_id),
+    session: AsyncSession = Depends(db_helper.get_scoped_session),
+):
+    return await crud.update_product(
+        session=session,
+        product=product,
+        product_update=payload,
     )
+
+
+@router.patch("/{product_id}", response_model=ProductResponse)
+async def update_product_partial(
+    payload: ProductUpdatePartial,
+    product: Product = Depends(get_product_by_id),
+    session: AsyncSession = Depends(db_helper.get_scoped_session),
+):
+    return await crud.update_product(
+        session=session,
+        product=product,
+        product_update=payload,
+        partial=True,
+    )
+
+
+@router.delete("/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_product(
+    product: Product = Depends(get_product_by_id),
+    session: AsyncSession = Depends(db_helper.get_scoped_session),
+) -> None:
+    await crud.delete_product(product=product, session=session)
