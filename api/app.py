@@ -6,7 +6,6 @@ from fastapi import FastAPI
 from verselect import HeaderRoutingFastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from core.database import Base, db_helper
 from .v2024_11_19.products.routes import router as product_router
 from .v2024_11_19.auth.routes import router as auth_router
 
@@ -16,8 +15,7 @@ from .v2024_11_19.auth.routes import router as auth_router
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    async with db_helper.engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+
     yield
 
 
