@@ -17,7 +17,11 @@ async def get_products(
     return await crud.get_products(session=session)
 
 
-@router.post("", response_model=ProductResponse)
+@router.post(
+    "",
+    response_model=ProductResponse,
+    status_code=status.HTTP_201_CREATED,
+)
 async def create_product(
     payload: ProductCreate,
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
