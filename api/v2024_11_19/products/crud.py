@@ -28,10 +28,10 @@ async def create_product(session: AsyncSession, payload: ProductCreate) -> Produ
 async def update_product(
     session: AsyncSession,
     product: Product,
-    product_update: ProductUpdate | ProductUpdatePartial,
+    payload: ProductUpdate | ProductUpdatePartial,
     partial: bool = False,
 ) -> Product:
-    for name, value in product_update.model_dump(exclude_unset=partial).items():
+    for name, value in payload.model_dump(exclude_unset=partial).items():
         setattr(product, name, value)
     await session.commit()
     return product
